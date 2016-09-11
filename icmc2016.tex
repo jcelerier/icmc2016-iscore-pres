@@ -3,7 +3,7 @@
 \usepackage{fontspec,xunicode,xltxtra}
 \usepackage[english]{babel}
 \usepackage{microtype}
-\usepackage{default}	
+\usepackage{default}
 
 \usepackage[]{hyperref}
 \hypersetup{
@@ -45,18 +45,68 @@
 \begin{frame}
     \frametitle{Position}    
     \Large
+    \vspace{5mm}
+    
     % TODO diagramme interactivité de la pres 1A
-    Authoring interactivity ?
-    When A then B : programming.
+    Authoring \textbf{interactivity} ?
+    \vspace{5mm}
     
-    Code-first environments.
+    \hfill \emph{When A then B : \textbf{programming}}
+    \vspace{5mm}
     
+    \textbf{Code-first} environments.
+    \vspace{5mm}
+    
+    \hfill \emph{Previous i-score version: \textbf{interaction points}.}
+    \vspace{5mm}
+    
+    \small
+    \begin{figure}
+        \begin{tikzpicture}
+        \draw[thick] (0,0) -- (8,0) 
+        node (L0) [at start] {$\bullet$}
+        node (L1) [very near start] {}
+        node (L2) [midway] {}
+        node (L3) [near end] {}
+        node (L4) [at end] {$\bullet$}
+        
+        node [at start, above, yshift=0.2cm] {Logical}
+        node [at end, above, yshift=0.2cm] {Temporal}
+        
+        node (T0) [at start, below, yshift=-0.2cm] {Pure code}
+        node (T1) [very near start, below, text width=5cm, yshift=-1cm, text centered] {Max~\\game engines}
+        node (T2) [midway, below, text width=5cm, yshift=-0.2cm, text centered] {MaxScore~\\note\textasciitilde}
+        node (T3) [near end, below, yshift=-0.4cm] {i-score}
+        node (T4) [at end, below, text width=3.5cm, yshift=-1cm, text centered] {Sequencers~\\(Cubase, Final Cut...)}
+        ;
+        
+        \draw[thick] (L0) ++(0,0.2) -- (T0);
+        \draw[thick] (L1) ++(0,0.2) -- (T1);
+        \draw[thick] (L2) ++(0,0.2) -- (T2);
+        \draw[thick] (L3) ++(0,0.2) -- (T3);
+        \draw[thick] (L4) ++(0,0.2) -- (T4);
+        \end{tikzpicture}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
     \frametitle{Inspiration}
     \Large
-    John Cage's Two, Klavierstücke XI
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            Polyvalent structure:
+            \begin{itemize}
+                \item \textbf{Feldman}~\\\textit{Intermission}
+                \item \textbf{Cage}~\\\textit{Two}
+                \item \textbf{Stockhausen}~\\\textit{Klavierstück XI}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \includegraphics[width=0.9\textwidth]{images/klavierstuck.jpg}
+        \end{column}
+    \end{columns}~\\
+    \vspace{5mm}
+    \centering High-level algorithms for the performer
 \end{frame}
 
 \section{Description}
@@ -73,51 +123,71 @@
 \end{frame}
 
 \begin{frame}
-    Playhead semantics
+    \frametitle{Imperative vs event-driven}
+    \begin{figure}
+        \includegraphics[width=0.7\textwidth]{images/procedural.png}
+        \caption{A \emph{then} B}
+    \end{figure}~\\
+    \begin{figure}
+        \includegraphics[width=0.7\textwidth]{images/event.png}
+        \caption{B \emph{when} A}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
-    \Large
     \frametitle{Loops}  
-\end{frame}
-
-\begin{frame}
     \Large
-    \frametitle{Data tree}  
-\end{frame}
-
-\begin{frame}
-    \Large
-    \frametitle{Code}  
-\end{frame}
-
-\section{Authoring}
-\begin{frame}
-    \frametitle{"Procedural"}
-\end{frame}
-\begin{frame}
-    \frametitle{"Event-driven"}
-\end{frame}
-
-
-\subsection{Audio processes}
-\begin{frame}	
-    \frametitle{Audio processes}    
-    \LARGE
     \begin{itemize}
-        \item Soundfile reading.
-        \item Real-time input.
-        \item Effect chains (Faust, LV2 in-progress).
-        \item Audiograph features~\\$\rightarrow$ send and return from different points in the score.
-        \item Mixing.
-    \end{itemize}    
+        \item Two interaction points.
+        \item One time-constraint.
+        \item Allows for \texttt{while} and \texttt{do-while}.
+    \end{itemize}
+    
+    \begin{figure}
+        \includegraphics[width=\textwidth]{images/loop.png}
+    \end{figure}
 \end{frame}
 
-\section{Method}
 \begin{frame}
-    \frametitle{The i-score audio graph}    
+    \frametitle{Data tree}  
+    \Large
+    
+    \begin{columns}
+        \begin{column}{0.40\textwidth}
+            \begin{figure}
+                \includegraphics[width=\textwidth]{images/device.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \item \textbf{Abstraction} over multiple protocols.~\\{\small \textbf{OSC}, \textbf{MIDI}, \textbf{Minuit}, \textbf{HTTP}, \textbf{WebSockets}, \textbf{Serial port}, \textbf{Local intropsection}}...
+                \item \textbf{Data model} of (remote) applications.
+                \item Can also be used as \textbf{local memory} for the score.
+            \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Code}
+    \Large
+    i-score: \textbf{temporal language}. 
+    \begin{itemize}
+    \item Unable to perform arithmetic computations alone. 
+    \item Only concerned by \textbf{temporal structure}.
+    \item $\rightarrow$ Introduction of an embedded language to perform this work.
+    \item Javascript fits the bill.
+    \end{itemize}
+    
+    \Large
+\end{frame}
+
+
+
+\begin{frame}
+    \frametitle{Playhead semantics}
+    \Large
+\end{frame}
 
 \section{Demo}
 
@@ -131,6 +201,7 @@
 	\frametitle{Future} 
 	\Large
 	\begin{itemize}
+        \item<1> For the sake of completeness : dynamic allocation primitives.
 		\item<1> Integrated input recording.
 		\item<2> Real-time audio input delaying and reuse.
 		\item<3> Deep MIDI integration, piano roll, etc.
