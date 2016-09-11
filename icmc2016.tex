@@ -16,7 +16,7 @@
 \usepackage{pstricks}
 \setmainfont{Fira Sans}
 \setsansfont{Noto Sans}
-\setmonofont{Fira Mono}
+\setmonofont{Fira Code}
 \captionsetup[subfigure]{labelformat=empty}
 \captionsetup[figure]{labelformat=empty}
 \setbeamertemplate{caption}{\raggedright\insertcaption\par}
@@ -26,11 +26,47 @@
 \usepackage[scale=2]{ccicons}
 \newfontfamily\unicodefun[Ligatures=TeX]{Symbola}
 \newfontfamily\unicodefun{Droid Sans}
+
+
+\lstdefinelanguage{JavaScript}{
+    keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+    keywordstyle=\color{blue}\bfseries,
+    ndkeywords={class, export, boolean, throw, implements, import, this},
+    ndkeywordstyle=\color{darkgray}\bfseries,
+    identifierstyle=\color{black},
+    sensitive=false,
+    comment=[l]{//},
+    morecomment=[s]{/*}{*/},
+    commentstyle=\color{purple}\ttfamily,
+    stringstyle=\color{red}\ttfamily,
+    morestring=[b]',
+    morestring=[b]"
+}
+
+\lstset{
+    language=JavaScript,
+    extendedchars=true,
+    basicstyle=\footnotesize\ttfamily,
+    showstringspaces=false,
+    showspaces=false,
+    numberstyle=\footnotesize,
+    numbersep=9pt,
+    tabsize=2,
+    breaklines=true,
+    showtabs=false,
+    captionpos=b
+}
+
 \title{Graphical Temporal Structured Programming}
 \subtitle{}
 \date{}
 \author{Jean-Michaël Celerier$\mathsf{^{1,2,3}}$~\\ Myriam Desainte-Catherine$\mathsf{^{2,3}}$~\\ Jean-Michel Couturier$\mathsf{^{1}}$}
-\institute{1: Blue Yeti~\\2: LaBRI~\\3: PoSET}
+\institute{1. Blue Yeti --- 2. SCRIME / LaBRI --- 3. PoSET}
+\titlegraphic{
+    \includegraphics[width=0.2\textwidth]{images/logobl.png} \vspace{1cm}
+    \includegraphics[width=0.2\textwidth]{images/poset.png} \vspace{1cm}
+    \includegraphics[width=0.5\textwidth]{images/scrime.jpg}}
+
 \usepackage{tikz}
 
 \newsavebox{\codebox}% For storing listings
@@ -41,7 +77,7 @@
 	\tableofcontents
 \end{frame}
 \section{Introduction}
-
+\subsection{Position}
 \begin{frame}
     \frametitle{Position}    
     \Large
@@ -89,6 +125,7 @@
     \end{figure}
 \end{frame}
 
+\subsection{Inspiration}
 \begin{frame}
     \frametitle{Inspiration}
     \Large
@@ -109,7 +146,7 @@
     \centering High-level algorithms for the performer
 \end{frame}
 
-\section{Description}
+\subsection{Vocabulary}
 \begin{frame}
     \Huge
     \centering{Vocabulary}
@@ -122,6 +159,8 @@
      \end{tikzpicture}
 \end{frame}
 
+\section{Authoring}
+\subsection{Patterns}
 \begin{frame}
     \frametitle{Imperative vs event-driven}
     \begin{figure}
@@ -134,6 +173,7 @@
     \end{figure}
 \end{frame}
 
+\subsection{Loops}
 \begin{frame}
     \frametitle{Loops}  
     \Large
@@ -148,6 +188,7 @@
     \end{figure}
 \end{frame}
 
+\subsection{Data}
 \begin{frame}
     \frametitle{Data tree}  
     \Large
@@ -168,6 +209,7 @@
     \end{columns}
 \end{frame}
 
+\subsection{Code}
 \begin{frame}
     \frametitle{Code}
     \Large
@@ -175,18 +217,55 @@
     \begin{itemize}
     \item Unable to perform arithmetic computations alone. 
     \item Only concerned by \textbf{temporal structure}.
-    \item $\rightarrow$ Introduction of an embedded language to perform this work.
+    \item Introduction of an embedded language to perform this work.
     \item Javascript fits the bill.
     \end{itemize}
     
     \Large
 \end{frame}
 
-
+\begin{frame}[fragile]
+    \frametitle{Code}
+    
+    \begin{figure}
+        \includegraphics[width=0.45\textwidth]{images/script.png}
+    \end{figure}
+    
+    \begin{lstlisting}
+function(t) {       // t in [0; +oo[
+var m = new Object; 
+m.address = 
+    'device:/address'; 
+m.value = 
+    t + iscore.value('device:/other/address'); 
+return [ obj ]; 
+}
+    \end{lstlisting}
+\end{frame}
+\begin{frame}[fragile]
+    \frametitle{Code}
+    
+    \begin{figure}
+        \includegraphics[width=0.45\textwidth]{images/script.png}
+    \end{figure}
+    
+    \begin{lstlisting}
+function() {
+return [ { 
+    address: 'foo:/bar',
+    value: Math.Random() * 42 % 35
+} ];
+\end{lstlisting}
+\end{frame}
 
 \begin{frame}
-    \frametitle{Playhead semantics}
-    \Large
+    \frametitle{Procedures}
+    Procedures are built from the elements presented up to now.
+    
+    \begin{figure}
+        \includegraphics[width=0.45\textwidth]{images/procedure.png}
+        \caption{Parent trigger:~\\\texttt{false}~\\First and second sub-triggers:~\\\texttt{local:/p/call == true}}
+    \end{figure}
 \end{frame}
 
 \section{Demo}
@@ -197,16 +276,18 @@
     \url{icmc.blueyeti.fr}
 \end{frame}
 
+\section{Conclusion}
 \begin{frame}
 	\frametitle{Future} 
 	\Large
 	\begin{itemize}
         \item<1> For the sake of completeness : dynamic allocation primitives.
-		\item<1> Integrated input recording.
-		\item<2> Real-time audio input delaying and reuse.
-		\item<3> Deep MIDI integration, piano roll, etc.
-		\item<4> Hierarchic temporal signatures.
-        \item<5> Spatialisation ?
+        \item<2> Hierarchic temporal signatures and work on proper musical features.
+        \item<3> Debugging : the main pain point.
+        \begin{itemize}
+            \item Possibilities that makes sense in the context of artistic creation.
+            \item Don't try to force traditional gdb-like debugging.
+        \end{itemize}
 		
 	\end{itemize}
 \end{frame}    
@@ -242,6 +323,6 @@
     \Large{Thanks ! Questions ?}
     \vspace{2em}
     
-    \tiny{Uses the Beamer 'simple' theme, Facundo Muñoz; and Mozilla's Fira font family}
+    \tiny{Uses the Beamer 'simple' theme (Facundo Muñoz); and Mozilla's Fira font family}
 \end{frame}
 \end{document}
